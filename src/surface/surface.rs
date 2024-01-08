@@ -102,8 +102,6 @@ impl Surface {
             panic!("surface swap error");
         }
     }
-
-    
 }
 
 impl Drop for Surface {
