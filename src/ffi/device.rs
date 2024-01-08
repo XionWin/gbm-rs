@@ -1,9 +1,7 @@
-use std::os::unix::prelude::RawFd;
+use std::os::fd::RawFd;
 
 #[repr(C)]
-pub struct GbmDevice
-{
-}
+pub struct GbmDevice {}
 
 #[link(name = "gbm")]
 #[allow(improper_ctypes)]

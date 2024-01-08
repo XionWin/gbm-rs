@@ -41,7 +41,7 @@ impl BufferObject {
                     offsets
                         .push(unsafe { crate::ffi::gbm_bo_get_offset(self.handle, plane_index) });
                 }
-                let fb = drm_rs::core::get_fb2(
+                let fb = crate::fb::get_fb2(
                     unsafe { crate::ffi::gbm_device_get_fd(device.get_handle_raw()) },
                     width,
                     height,

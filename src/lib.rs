@@ -1,6 +1,5 @@
 #[macro_use]
 mod utils;
-extern crate drm_rs;
 
 mod device;
 mod surface;
@@ -8,6 +7,7 @@ mod bo;
 mod gbm;
 pub(crate) mod ffi;
 pub mod def;
+mod fb;
 
 
 pub use device::*;

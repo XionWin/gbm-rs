@@ -1,8 +1,10 @@
+use std::os::fd::RawFd;
+
 use crate::{Device, Surface, def::{SurfaceFormat, FormatModifier}};
 
 #[derive(Debug)]
 pub struct Gbm {
-    pub drm: drm_rs::core::Drm,
+    pub fd: RawFd,
     pub surface: Surface,
     pub surface_format: SurfaceFormat,
     pub format_modifiers: Vec<FormatModifier>,
@@ -11,22 +13,17 @@ pub struct Gbm {
 }
 
 impl Gbm {
-    pub fn new(drm: drm_rs::core::Drm, surface_format: SurfaceFormat, format_modifiers: Vec<FormatModifier>) -> Self
+    pub fn new(fd: RawFd, crtc_width: i32, crtc_height: i32, surface_format: SurfaceFormat, format_modifiers: Vec<FormatModifier>) -> Self
     {
-        let width = drm.crtc.get_width();
-        let height = drm.crtc.get_height();
-        let surface = Surface::new_with_modifiers(Device::new(drm.get_fd()), width, height, surface_format, &format_modifiers);
+        let surface = Surface::new_with_modifiers(Device::new(fd), crtc_width, crtc_height, surface_format, &format_modifiers);
         Self{
-            drm,
+            fd,
             surface,
             surface_format,
             format_modifiers,
-            width,
-            height,
+            width: crtc_width,
+            height: crtc_height,
         }
-    }
-    pub fn get_drm(&self) -> &drm_rs::core::Drm {
-        &self.drm
     }
     
     pub fn get_surface(&self) -> &Surface {
