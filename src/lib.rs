@@ -1,6 +1,6 @@
 #[macro_use]
-extern crate utils;
-extern crate drm;
+mod utils;
+extern crate drm_rs;
 
 mod device;
 mod surface;
