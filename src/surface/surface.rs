@@ -1,3 +1,5 @@
+use std::os::fd::RawFd;
+
 #[derive(Debug)]
 pub struct Surface {
     pub(crate) handle: *const crate::ffi::GbmSurface,
@@ -62,7 +64,7 @@ impl Surface {
         &self.device
     }
 
-    pub fn get_handle(&self) -> libc::c_int {
+    pub fn get_handle(&self) -> RawFd {
         self.handle as _
     }
 

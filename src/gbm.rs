@@ -25,12 +25,21 @@ impl Gbm {
             height: crtc_height,
         }
     }
+
+    pub fn get_fd(&self) -> RawFd {
+        self.fd
+    }
     
     pub fn get_surface(&self) -> &Surface {
         &self.surface
     }
-    pub fn get_surface_mut(&mut self) -> &mut Surface {
-        &mut self.surface
+
+    pub fn get_surface_format(&self) -> SurfaceFormat {
+        self.surface_format
+    }
+
+    pub fn get_format_modifiers(&self) -> &Vec<FormatModifier> {
+        &self.format_modifiers
     }
 
     pub fn get_width(&self) -> libc::c_int {
