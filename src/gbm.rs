@@ -4,12 +4,12 @@ use crate::{Device, Surface, def::{SurfaceFormat, FormatModifier}};
 
 #[derive(Debug)]
 pub struct Gbm {
-    pub fd: RawFd,
-    pub surface: Surface,
-    pub surface_format: SurfaceFormat,
-    pub format_modifiers: Vec<FormatModifier>,
-    pub width: libc::c_int,
-    pub height: libc::c_int,
+    fd: RawFd,
+    surface: Surface,
+    surface_format: SurfaceFormat,
+    format_modifiers: Vec<FormatModifier>,
+    width: libc::c_int,
+    height: libc::c_int,
 }
 
 impl Gbm {
@@ -31,6 +31,14 @@ impl Gbm {
     }
     pub fn get_surface_mut(&mut self) -> &mut Surface {
         &mut self.surface
+    }
+
+    pub fn get_width(&self) -> libc::c_int {
+        self.width
+    }
+
+    pub fn get_height(&self) -> libc::c_int {
+        self.height
     }
 
 }
