@@ -33,11 +33,4 @@ impl Gbm {
         &mut self.surface
     }
 
-    
-    pub fn get_width(&self) -> libc::c_int {
-        self.width
-    }
-    pub fn get_height(&self) -> libc::c_int {
-        self.height
-    }
 }
