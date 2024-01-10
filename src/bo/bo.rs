@@ -58,7 +58,7 @@ impl BufferObject {
                         destroy_user_data_callback,
                     );
                 }
-                println!("get_fb: {:#x?}", fb);
+                colored_rs::print_debug!("get_fb: {:#x?}", fb);
                 fb
             }
             user_data => user_data as _,
@@ -70,7 +70,7 @@ extern "C" fn destroy_user_data_callback(
     bo: *const crate::ffi::GbmBufferObject,
     data: *const libc::c_void,
 ) {
-    println!("destroy_user_data_callback bo: {:?} data: {:?}", bo, data);
+    colored_rs::print_debug!("destroy_user_data_callback bo: {:?} data: {:?}", bo, data);
 }
 
 // impl Drop for BufferObject {
