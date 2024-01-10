@@ -33,6 +33,10 @@ impl Gbm {
     pub fn get_surface(&self) -> &Surface {
         &self.surface
     }
+    
+    pub fn get_surface_mut(&mut self) -> &mut Surface {
+        &mut self.surface
+    }
 
     pub fn get_surface_format(&self) -> SurfaceFormat {
         self.surface_format
