@@ -59,7 +59,7 @@ impl BufferObject {
                         destroy_user_data_callback,
                     );
                 }
-                colored_rs::print_debug!("get_fb: {:x?}", fb);
+                colored_rs::print_debug!("get_fb: {:#x?}", fb);
                 fb
             }
             user_data => user_data as _,
