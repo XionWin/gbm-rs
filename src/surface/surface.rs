@@ -77,7 +77,7 @@ impl Surface {
         self.swap_callback = swap_callback;
     }
 
-    pub fn lock(&mut self) -> (crate::BufferObject, libc::c_uint) {
+    pub fn lock(&mut self) -> (&'static crate::BufferObject, libc::c_uint) {
         self.swap();
 
         let last_bo_handle = self.bo_handle;
@@ -85,7 +85,7 @@ impl Surface {
             handle if handle == std::ptr::null() => panic!("[GBM]: Failed to lock front buffer"),
             handle => handle,
         };
-        let bo = crate::BufferObject::new(self.bo_handle);
+        let bo = crate::BufferObject::get_bo(self.bo_handle);
         let fb = bo.get_fb(&self.device);
 
         if last_bo_handle != std::ptr::null() {

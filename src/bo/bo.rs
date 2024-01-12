@@ -1,24 +1,25 @@
+use once_cell::sync::Lazy;
+use std::collections::HashMap;
+
 #[derive(Debug)]
 pub struct BufferObject {
     handle: *const crate::ffi::GbmBufferObject,
 }
 
-impl BufferObject {
-    pub fn new(handle: *const crate::ffi::GbmBufferObject) -> Self {
-        Self { handle }
-    }
+static mut BUFFER_OBJECT_CACHE: Lazy<HashMap<*const crate::ffi::GbmBufferObject, BufferObject>> =
+    Lazy::new(|| HashMap::<*const crate::ffi::GbmBufferObject, BufferObject>::new());
 
-    // pub fn create(
-    //     handle: *const crate::ffi::GbmDevice,
-    //     width: libc::c_uint,
-    //     height: libc::c_uint,
-    //     format: crate::def::SurfaceFormat,
-    //     flags: crate::def::SurfaceFlags,
-    // ) -> Self {
-    //     Self {
-    //         handle: unsafe { crate::ffi::gbm_bo_create(handle, width, height, format, flags) },
-    //     }
-    // }
+impl BufferObject {
+    pub fn get_bo(handle: *const crate::ffi::GbmBufferObject) -> &'static Self {
+        unsafe {
+            if BUFFER_OBJECT_CACHE.contains_key(&handle) == false {
+                let bo = Self { handle };
+                BUFFER_OBJECT_CACHE.insert(handle, bo);
+                colored_rs::print_debug!("create bo: {:?}", handle);
+            }
+            &BUFFER_OBJECT_CACHE[&handle]
+        }
+    }
 
     pub(crate) fn get_fb(&self, device: &crate::Device) -> libc::c_uint {
         match unsafe { crate::ffi::gbm_bo_get_user_data(self.handle) } {
@@ -73,15 +74,15 @@ extern "C" fn destroy_user_data_callback(
     colored_rs::print_debug!("destroy_user_data_callback bo: {:?} data: {:?}", bo, data);
 }
 
-// impl Drop for BufferObject {
-//     fn drop(&mut self) {
-//         unsafe {
-//             if self.handle as u32 == 0 {
-//                 println!("Err");
-//                 return;
-//             }
-//             crate::ffi::gbm_bo_destroy(self.handle);
-//             println!("BufferObject: {:?} droped", self.handle);
-//         }
-//     }
-// }
+impl Drop for BufferObject {
+    fn drop(&mut self) {
+        unsafe {
+            if self.handle as u32 == 0 {
+                println!("Err");
+                return;
+            }
+            crate::ffi::gbm_bo_destroy(self.handle);
+            colored_rs::print_debug!("BufferObject: {:?} droped", self.handle);
+        }
+    }
+}

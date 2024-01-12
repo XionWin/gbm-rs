@@ -8,4 +8,5 @@ edition = "2021"
 [dependencies]
 libc="*"
 bitflags="*"
+once_cell="*"
 colored-rs = { path="../../colored-rs" }
