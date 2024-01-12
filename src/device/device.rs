@@ -18,7 +18,7 @@ impl Device {
         self.handle
     }
 
-    pub fn get_handle(&self) -> RawFd {
+    pub fn get_handle(&self) -> *const libc::c_void {
         self.handle as _
     }
 
