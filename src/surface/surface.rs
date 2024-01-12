@@ -108,7 +108,7 @@ impl Drop for Surface {
     fn drop(&mut self) {
         unsafe {
             crate::ffi::gbm_surface_destroy(self.handle);
-            colored_rs::print_debug!("Surface: {:#?} droped", self.handle);
+            colored_rs::print_debug!("Surface: {:?} droped", self.handle);
         }
     }
 }

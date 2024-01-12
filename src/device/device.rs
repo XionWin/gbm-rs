@@ -33,7 +33,7 @@ impl Drop for Device {
     fn drop(&mut self) {
         unsafe {
             crate::ffi::gbm_device_destroy(self.handle);
-            colored_rs::print_debug!("Device: {:#?} droped", self.handle);
+            colored_rs::print_debug!("Device: {:?} droped", self.handle);
         }
     }
 }
