@@ -15,7 +15,7 @@ impl BufferObject {
             if BUFFER_OBJECT_CACHE.contains_key(&handle) == false {
                 let bo = Self { handle };
                 BUFFER_OBJECT_CACHE.insert(handle, bo);
-                colored_rs::print_debug!("create bo: {:?}", handle);
+                colored_rs::print_debug!("create_bo: {:?}", handle);
             }
             &BUFFER_OBJECT_CACHE[&handle]
         }
